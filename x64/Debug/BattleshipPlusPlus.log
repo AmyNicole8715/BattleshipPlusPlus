@@ -1,0 +1,4 @@
+﻿  BattleshipPlusPlus.cpp
+C:\Users\Amy\source\CRepos\BattleshipPlusPlus\BattleshipPlusPlus.cpp(38,23): warning C4101: 'correctedCol': unreferenced local variable
+C:\Users\Amy\source\CRepos\BattleshipPlusPlus\BattleshipPlusPlus.cpp(38,9): warning C4101: 'correctedRow': unreferenced local variable
+  BattleshipPlusPlus.vcxproj -> C:\Users\Amy\source\CRepos\BattleshipPlusPlus\x64\Debug\BattleshipPlusPlus.exe
