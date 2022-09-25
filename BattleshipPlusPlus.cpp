@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
+#include <sstream>
 
 using namespace std;
 
@@ -28,17 +30,13 @@ int ocean[10][10] = {
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
-
-
 void placeShips(int row, int col) 
 {
     ocean[row][col] = isShip;
 }
 
-void placeShipsPrompt()
+void placeShipsPrompt(ofstream& Fleet)
 {
-	fstream Fleet("save.txt");
-
 	// Ask user to enter the row and column they want the ship to be placed
 	cout << "Enter the row and column of the ship you want to place numbered between 1 and 10: ";
 	int row;
@@ -50,7 +48,7 @@ void placeShipsPrompt()
 	// Subtract 1 from row and column so ship is placed within the bounds of the dimensions of the arrays
 	correctedRow = row - 1;
 	correctedCol = col - 1;
-	Fleet << correctedRow, correctedCol, "\n";
+	Fleet << correctedRow << "," << correctedCol << "\n";
 	placeShips(correctedRow, correctedCol);
 	
 	// Tell user where they placed their ships
@@ -60,8 +58,17 @@ void placeShipsPrompt()
 
 
 
-void guesserShipPlacement()
+void guesserShipPlacement(ifstream& Fleet)
 {
+	
+	/*string fleetLine = "";
+	Fleet >> fleetLine;
+	int row;
+	int col;
+	while (Fleet >> row >> col)
+	{
+		placeShips(row, col);
+	}*/
 	placeShips(5, 6);
 	placeShips(5, 5);
 	placeShips(5, 4);
@@ -91,13 +98,33 @@ int main()
 	string choice;
 	cin >> choice;
 	if (choice == "place") {
+		ofstream Fleet("save.txt");
 		// prompt user for 5 ships
 		for (int i = 0; i < 5; i++) {
-			placeShipsPrompt();
+			placeShipsPrompt(Fleet);
 		}
 	} else if (choice == "play") {
-		guesserShipPlacement();
-		cout << "Where would you like to fire a torpedo? (x,y)";
+
+		ifstream Fleet("save.txt");
+		string fleetLine, rowString, colString;
+		getline(Fleet, fleetLine);
+		fleetLine.append("\n");
+		cout << fleetLine;
+		
+		stringstream str(fleetLine, ios_base::out);
+		
+		while (getline(str, rowString, ','));
+		cout << rowString;
+		rowString.append("\0");
+		/*int row = stoi(rowString);*/
+		while (getline(str, colString));
+		cout << colString;
+		colString.append("\0");
+		/*
+		int col = stoi(colString);
+		cout << row << " followed by " << col;*/
+		/*guesserShipPlacement(Fleet);
+		cout << "Where would you like to fire a torpedo? (x,y)";*/
 
 	}
 
